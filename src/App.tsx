@@ -1,20 +1,24 @@
-import React, { Component } from 'react';
-import Life from './life';
+import React, { Component } from "react";
+import Life from "./life";
 
-const HEIGHT = 400;
-const WIDTH = 401;
+export interface LifeCanvasProps {
+  height: number;
+  width: number;
+}
 
-// const COLORS = [[0, 0, 0], [255, 255, 255], [255, 0, 0]];
-const COLORS = [[0, 0, 0], [200, 0, 0], [255, 255, 255], [0, 255, 0]];
 // BACKGROUND, DEAD, ADULT, CHILD
+const COLORS = [
+  [0, 0, 0],
+  [200, 0, 0],
+  [255, 255, 255],
+  [0, 255, 0]
+];
 
-/**
- * Life canvas
- */
-class LifeCanvas extends Component {
-  /**
-   * Constructor
-   */
+class LifeCanvas extends Component<LifeCanvasProps> {
+  life: Life;
+  canvas: HTMLCanvasElement | null;
+  ctx: CanvasRenderingContext2D | null;
+
   constructor(props) {
     super(props);
 
@@ -25,9 +29,6 @@ class LifeCanvas extends Component {
     this.ctx = null;
   }
 
-  /**
-   * Component did mount
-   */
   componentDidMount() {
     this.setupCanvus();
     requestAnimationFrame(() => {
@@ -36,23 +37,22 @@ class LifeCanvas extends Component {
   }
 
   setupCanvus = () => {
-    this.canvas = this.refs.canvas;
-    this.ctx = this.canvas.getContext('2d');
+    this.canvas = this.refs.canvas as HTMLCanvasElement;
+    this.ctx = this.canvas.getContext("2d");
 
-    this.ctx.fillStyle = 'white';
-    this.ctx.fillRect(0, 0, this.props.width, this.props.height);
+    if (this.ctx) {
+      this.ctx.fillStyle = "white";
+      this.ctx.fillRect(0, 0, this.props.width, this.props.height);
+    }
   };
 
-  /**
-   * Handle an animation frame
-   */
   animFrame() {
     let cells = this.life.getCells();
 
-    let canvas = this.refs.canvas;
-    let ctx = canvas.getContext('2d');
+    let canvas = this.refs.canvas as HTMLCanvasElement;
+    let ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = "white";
     ctx.fillRect(0, 0, this.props.width, this.props.height);
 
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -77,9 +77,6 @@ class LifeCanvas extends Component {
     requestAnimationFrame(() => this.animFrame());
   }
 
-  /**
-   * Render
-   */
   render() {
     return (
       <canvas
@@ -91,32 +88,4 @@ class LifeCanvas extends Component {
   }
 }
 
-/**
- * Life holder component
- */
-class LifeApp extends Component {
-  /**
-   * Render
-   */
-  render() {
-    return (
-        <LifeCanvas width={WIDTH} height={HEIGHT} />
-    );
-  }
-}
-
-/**
- * Outer App component
- */
-class App extends Component {
-  /**
-   * Render
-   */
-  render() {
-    return (
-      <LifeApp />
-    );
-  }
-}
-
-export default App;
+export default LifeCanvas;

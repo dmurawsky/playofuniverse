@@ -19,15 +19,13 @@ function Array2D(width, height) {
   return a;
 }
 
-/**
- * Life class
- */
 class Life {
-  /**
-   * Constructor
-   */
+  width: number;
+  height: number;
+  activeBuffer: number;
+  buffers: Array<Array<any>>;
+
   constructor(width, height) {
-    // !!!! IMPLEMENT ME !!!!
     this.width = width;
     this.height = height;
 

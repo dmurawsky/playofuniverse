@@ -1,6 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const HEIGHT = 400;
+const WIDTH = 401;
+
+ReactDOM.render(
+  <App width={WIDTH} height={HEIGHT} />,
+  document.getElementById("root")
+);
